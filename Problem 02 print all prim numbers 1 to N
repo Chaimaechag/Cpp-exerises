@@ -1,0 +1,43 @@
+#include <iostream>
+#include <string>
+using namespace std;
+enum enPrimNotPrim{ Prim = 1 , NotPrim = 2 };
+int ReadPositiveNumber(string message)
+{
+	int number = 0;
+	do
+	{
+		cout << message << endl;
+		cin >> number;
+	} while (number <= 0);
+	return number;
+}
+enPrimNotPrim checkPrim(int number)
+{
+	int M = round(number / 2);
+	for ( int counter = 2 ; counter <= M ; counter++)
+	
+	{
+		if (number % counter == 0)
+			return enPrimNotPrim::NotPrim;
+	}
+	return enPrimNotPrim::Prim;
+}
+void PrintPrimeNumbersFrom1ToN(int number)
+{
+	cout << endl;
+	cout << "the prim numbers from  " << 1 << " to " << number << " are" << endl;
+	cout << endl;
+
+	for (int i = 1; i <= number; i++)
+	{
+		if (checkPrim(i) == enPrimNotPrim::Prim)
+			cout << i <<  endl;
+		
+	}
+}
+int main()
+{
+	PrintPrimeNumbersFrom1ToN( ReadPositiveNumber(" please enter e positive number to check if it is prim or not "));
+return 0 ; 
+}
