@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+int ReadPositiveNumber(string message)
+{
+	int number = 0; 
+	do
+	{
+		cout << message << endl;
+		cin >> number;
+	} while (number <= 0);
+	return number;
+}
+int CountDigitFrequency(short DigitToCheck , int number )
+{
+	 int remainder = 0; 
+	 int freqcount = 0;
+	 while (number >0)
+	 {
+		 remainder = number % 10;
+		 number = number / 10;
+		 if ( DigitToCheck == remainder)
+			 freqcount++;
+	 }
+	 return freqcount;
+
+}
+int main()
+{
+	int number = ReadPositiveNumber("Please enter the main number?");
+	short DigitToCheck = ReadPositiveNumber("Please enter one digit to check");
+	cout << "Digit  :" << DigitToCheck << "  frequency is  :" << CountDigitFrequency(DigitToCheck ,number ) <<"  time(s)" << endl;
+	return  0;
+}
