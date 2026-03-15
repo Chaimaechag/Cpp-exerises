@@ -19,14 +19,13 @@ int  SumOfDigits(int number)
 	 {
 		 Remainder = number % 10;
 			number = number / 10;
-			sum += Remainder;
-		
+			sum += Remainder;	
 	 };
 	return sum ;
 }
 int main()
 {
-cout<<"\nReverse is:\n"<<
+cout<<"\nSum Of Digits\n"<<
 SumOfDigits(ReadPositivNumber("please enter a positive number"))
 	<<"\n";
 	return  0;
