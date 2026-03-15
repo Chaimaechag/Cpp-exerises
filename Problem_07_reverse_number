@@ -1,0 +1,35 @@
+#include <iostream>
+#include <string>
+using namespace std;
+int ReadPositivNumber(string message)
+{
+	int number = 0; 
+	do
+	{
+		cout << message << endl;
+		cin >> number;
+	} while (number <= 0);
+	return  number;
+}
+int ReviseOfDigits(int number)
+{
+	int number2 = 0;
+	 int Remainder = 0;
+	 while (number > 0)
+	 {
+		 Remainder = number % 10;
+			number = number / 10;
+			number2 = number2 * 10 + Remainder;
+	 };
+	 return number2;
+	
+}
+int main()
+{
+	cout << "\nReverse is:\n"
+
+		<< ReviseOfDigits(ReadPositivNumber("please enter a positive number"));
+	cout <<"\n";
+
+	return  0;
+}
