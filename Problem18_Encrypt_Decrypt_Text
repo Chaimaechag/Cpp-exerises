@@ -1,0 +1,69 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+/**
+ * @brief Reads a full line of text from the user, including spaces.
+ * @return The entered text as a string.
+ */
+string readText()
+{
+    string text;
+    cout << "Please enter a text to encrypt:\n";
+    getline(cin, text); 
+    
+    return text;
+}
+
+/**
+ * @brief Encrypts a string by applying a Caesar cipher shift.
+ * @param text The original string to be encrypted.
+ * @param encryptionKey The numeric value added to each character.
+ * @return The fully encrypted string.
+ */
+string encryptText(string text, short encryptionKey)
+{
+    for (int j = 0; j < text.length(); j++)
+    {
+        // Explicitly casting the char to int for math, then back to char
+        text[j] = char((int)text[j] + encryptionKey);
+    }
+    return text;
+}
+
+/**
+ * @brief Decrypts a string that was encrypted with a Caesar cipher shift.
+ * @param text The encrypted string.
+ * @param encryptionKey The numeric value used during encryption.
+ * @return The decrypted original string.
+ */
+string decryptText(string text, short encryptionKey)
+{
+    for (int j = 0; j < text.length(); j++)
+    {
+        // Explicitly casting the char to int for math, then back to char
+        text[j] = char((int)text[j] - encryptionKey);
+    }
+    return text;
+}
+
+int main()
+{
+    // A constant key used for both encryption and decryption
+    const short ENCRYPTION_KEY = 3; 
+    
+    string originalText = readText();
+    
+    // Process the text
+    string encryptedText = encryptText(originalText, ENCRYPTION_KEY);
+    string decryptedText = decryptText(encryptedText, ENCRYPTION_KEY);
+
+    // Display the results with clear formatting
+    cout << "\n----------------------------------------\n";
+    cout << "The encrypted text is: " << encryptedText << endl;
+    cout << "The decrypted text is: " << decryptedText << endl;
+    cout << "----------------------------------------\n";
+
+    return 0;
+}
