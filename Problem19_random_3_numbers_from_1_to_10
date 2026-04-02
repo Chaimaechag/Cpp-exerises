@@ -1,0 +1,31 @@
+#include <iostream>
+#include <string>
+#include <cstdlib> // Contains rand() and srand() functions
+#include <ctime>   // Contains the time() function to get system time
+
+using namespace std;
+
+/**
+ * Generates a random number within a specific range [from, to].
+ * It uses the modulo operator to limit the result and then shifts it.
+ */
+int generateRandomNumber(int from, int to)
+{
+    // Calculation: (Random % RangeSize) + StartOffset
+    int randNum = rand() % (to - from + 1) + from;
+    return randNum;
+}
+
+int main()
+{
+    // Seed the random number generator using the current time (Seconds since 1.1.1970)
+    // This ensures a different sequence of numbers every time the program runs.
+    srand((unsigned)time(NULL));
+
+    // Print three random numbers between 1 and 10
+    cout << generateRandomNumber(1, 10) << endl;
+    cout << generateRandomNumber(1, 10) << endl;
+    cout << generateRandomNumber(1, 10) << endl;
+
+    return 0;
+}
