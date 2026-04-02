@@ -1,0 +1,77 @@
+#include <iostream>
+#include <string>
+#include <cstdlib> // Include for rand() and srand() functions
+#include <ctime>   // Include for time() function to get system time
+
+using namespace std;
+
+/**
+ * Function: RandomNumber
+ * Purpose: Generates a random integer within a specific range [from, to].
+ * Logic: Uses modulo to limit the range and addition to shift the start.
+ */
+int RandomNumber(int from, int to)
+{
+    // Formula: (Random % RangeSize) + StartOffset
+    int randNum = rand() % (to - from + 1) + from;
+    return randNum;
+}
+
+/**
+ * Enum: enCharType
+ * Purpose: Categorizes different character types for better readability.
+ * Using Enums makes the code self-documenting and easier for other programmers.
+ */
+enum enCharType
+{
+    SmallLetter = 1,
+    CapitalLetter = 2,
+    SpecialCharacter = 3,
+    Digit = 4
+};
+
+/**
+ * Function: GetRandomCharacter
+ * Purpose: Returns a single random character based on the selected category.
+ * Parameters: enCharType (the category of character needed).
+ */
+char GetRandomCharacter(enCharType charType)
+{
+    switch (charType)
+    {
+    case enCharType::SmallLetter:
+        // ASCII range for 'a' to 'z' is 97 to 122
+        return char(RandomNumber(97, 122));
+
+    case enCharType::CapitalLetter:
+        // ASCII range for 'A' to 'Z' is 65 to 90
+        return char(RandomNumber(65, 90));
+
+    case enCharType::SpecialCharacter:
+        // ASCII range for symbols like '!' to '/' is 33 to 47
+        return char(RandomNumber(33, 47));
+
+    case enCharType::Digit:
+        // ASCII range for numbers '0' to '9' is 48 to 57
+        return char(RandomNumber(48, 57));
+
+    default:
+        // Return null character if no valid type is provided
+        return '\0';
+    }
+}
+
+int main()
+{
+    // Seed the random number generator using the current time.
+    // This ensures that we get different random values every time we run the app.
+    srand((unsigned)time(NULL));
+
+    // Output a random character from each category defined in the Enum.
+    cout << "Small Letter: " << GetRandomCharacter(enCharType::SmallLetter) << endl;
+    cout << "Capital Letter: " << GetRandomCharacter(enCharType::CapitalLetter) << endl;
+    cout << "Special Char: " << GetRandomCharacter(enCharType::SpecialCharacter) << endl;
+    cout << "Random Digit: " << GetRandomCharacter(enCharType::Digit) << endl;
+
+    return 0;
+}
