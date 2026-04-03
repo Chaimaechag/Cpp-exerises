@@ -1,0 +1,147 @@
+#include <iostream>
+#include <string> 
+#include <cstdlib> // Standard library for rand() and srand() functions.
+#include <ctime>   // Header for time() to seed the random number generator.
+
+using namespace std;
+
+/**
+ * Function: getRandomNumberInRange
+ * -------------------------------
+ * Generates a random integer between 'from' and 'to' (inclusive).
+ * It uses the modulo operator to ensure the number stays within the range.
+ */
+int getRandomNumberInRange(int from, int to)
+{
+    int randNum = rand() % (to - from + 1) + from;
+    return randNum;
+}
+
+/**
+ * Enum: enCharacterType
+ * --------------------
+ * Defines categories for different character types to make the code 
+ * more readable and manageable.
+ */
+enum enCharacterType { 
+    SmallLetter = 1, 
+    CapitalLetter = 2, 
+    SpecialCharacter = 3, 
+    Digit = 4 
+};
+
+/**
+ * Function: getRandomCharacter
+ * ---------------------------
+ * Takes a character type from the enum and returns a corresponding random char.
+ * It maps the selection to specific ASCII ranges.
+ */
+char getRandomCharacter(enCharacterType charType)
+{
+    switch (charType) 
+    {
+    case enCharacterType::SmallLetter:
+        // ASCII range for 'a'-'z' is 97-122.
+        return char(getRandomNumberInRange(97, 122));
+
+    case enCharacterType::CapitalLetter:
+        // ASCII range for 'A'-'Z' is 65-90.
+        return char(getRandomNumberInRange(65, 90));
+
+    case enCharacterType::SpecialCharacter:
+        // ASCII range for symbols like !, @, # is 33-47.
+        return char(getRandomNumberInRange(33, 47));
+
+    case enCharacterType::Digit:
+        // ASCII range for '0'-'9' is 48-57.
+        return char(getRandomNumberInRange(48, 57));
+
+    default:
+        // Fallback to null character for safety.
+        return '\0'; 
+    }
+}
+
+/**
+ * Function: readPositiveNumber
+ * ---------------------------
+ * Prompts the user for input and ensures the returned number is positive (> 0).
+ * This prevents logic errors in the loops.
+ */
+int readPositiveNumber(string promptMessage)
+{
+    int inputNumber = 0;
+    do
+    {
+        cout << promptMessage << endl;
+        cin >> inputNumber;
+    } while (inputNumber <= 0);
+    return inputNumber;
+}
+
+/**
+ * Function: generateWord
+ * ---------------------
+ * Creates a string (word) of a specific length by repeatedly 
+ * calling getRandomCharacter and appending the result.
+ */
+string generateWord(enCharacterType charType, short length)
+{
+    string word = "";
+    for (int i = 1; i <= length; i++)
+    {
+        word = word + getRandomCharacter(charType);
+    }
+    return word;
+}
+
+/**
+ * Function: generateKey
+ * --------------------
+ * Orchestrates the creation of a full license key composed of 4 groups
+ * of 4 uppercase letters, separated by hyphens.
+ */
+string generateKey()
+{
+    string fullKey = "";
+    
+    // Constructing the key format: XXXX-XXXX-XXXX-XXXX
+    fullKey = generateWord(enCharacterType::CapitalLetter, 4) + "-";
+    fullKey = fullKey + generateWord(enCharacterType::CapitalLetter, 4) + "-";
+    fullKey = fullKey + generateWord(enCharacterType::CapitalLetter, 4) + "-";
+    fullKey = fullKey + generateWord(enCharacterType::CapitalLetter, 4);
+    
+    return fullKey;
+}
+
+/**
+ * Procedure: printGeneratedKeys
+ * ----------------------------
+ * A void function (procedure) that loops based on user input 
+ * to print the required number of unique keys.
+ */
+void printGeneratedKeys(int numberOfKeys)
+{
+    for (int i = 1; i <= numberOfKeys; i++)
+    {
+        cout << "Key [" << i << "] : " << generateKey() << endl;
+    }
+}
+
+/**
+ * Main Function
+ * ------------
+ * The entry point of the program. Initializes the random seed 
+ * and starts the key generation process.
+ */
+int main()
+{
+    // Seed the random number generator using the system time.
+    srand((unsigned)time(NULL));
+
+    // Execution flow: Read input -> Generate & Print keys.
+    int totalKeys = readPositiveNumber("Please enter how many keys to generate: ");
+    printGeneratedKeys(totalKeys);
+
+    return 0;
+}
