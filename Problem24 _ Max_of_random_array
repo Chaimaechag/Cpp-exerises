@@ -1,0 +1,92 @@
+#include <iostream>
+#include <cstdlib> // Standard library for rand() and srand()
+#include <ctime>   // Header for time() to seed the random generator
+
+using namespace std;
+
+/**
+ * Function: GetRandomNumber
+ * -------------------------
+ * Generates a random integer within a specific range [From, To].
+ * Formula: rand() % (RangeSize) + Offset
+ */
+int GetRandomNumber(int From, int To)
+{
+    int randNum = rand() % (To - From + 1) + From;
+    return randNum;
+}
+
+/**
+ * Procedure: FillArrayWithRandomNumbers
+ * -------------------------------------
+ * Prompts the user for the number of elements and fills the array 
+ * with random values between 1 and 100.
+ * Note: arrLength is passed by reference (&) to update the original variable in main.
+ */
+void FillArrayWithRandomNumbers(int arr[100], int &arrLength)
+{
+    cout << "Please enter the number of elements: " << endl;
+    cin >> arrLength;
+
+    for (int i = 0; i < arrLength; i++)
+    {
+        arr[i] = GetRandomNumber(1, 100);
+    }
+}
+
+/**
+ * Procedure: PrintArray
+ * --------------------
+ * Iterates through the array and prints each element followed by a space.
+ */
+void PrintArray(int arr[100], int arrLength)
+{
+    for (int i = 0; i < arrLength; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+/**
+ * Function: GetMaxNumberInArray
+ * ----------------------------
+ * Finds and returns the largest number in the array.
+ * Logic: It initializes 'Max' with 0 and updates it whenever a larger 
+ * element is found during iteration.
+ */
+int GetMaxNumberInArray(int arr[100], int arrLength)
+{
+    int Max = 0; 
+    for (int i = 0; i < arrLength; i++)
+    {
+        // Assignment Logic: If current element is greater, update Max
+        if (arr[i] > Max)
+        {
+            Max = arr[i]; 
+        }
+    }
+    return Max;
+}
+
+int main()
+{
+    // Seed the random number generator with current time
+    srand((unsigned)time(NULL));
+
+    int arr[100];
+    int arrLength;
+
+    // 1. Input: Fill array with random data
+    FillArrayWithRandomNumbers(arr, arrLength);
+
+    // 2. Output: Display the generated array
+    cout << "\nArray elements are: ";
+    PrintArray(arr, arrLength);
+
+    // 3. Analysis: Find and display the maximum value
+    cout << "\nThe maximum number is: ";
+    cout << GetMaxNumberInArray(arr, arrLength) << endl;
+
+    return 0;
+}
