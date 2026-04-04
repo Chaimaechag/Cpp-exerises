@@ -1,0 +1,99 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+/**
+ * Function: ReadPositiveNumber
+ * ---------------------------
+ * Validates user input to ensure only positive integers are accepted.
+ */
+int ReadPositiveNumber(string message)
+{
+    int number = 0;
+    do
+    {
+        cout << message << endl;
+        cin >> number;
+    } while (number <= 0);
+    
+    return number;
+}
+
+/**
+ * Procedure: ReadArray
+ * -------------------
+ * Fills an array with user-provided integers.
+ * Uses 'Pass by Reference' (&) for arrLength to update the value in main().
+ */
+void ReadArray(int arr[100], int &arrLength)
+{
+    cout << "\nEnter the number of elements: ";
+    cin >> arrLength;
+
+    cout << "Enter the elements of the array: " << endl;
+    for (int i = 0; i < arrLength; i++)
+    {
+        // Display [i+1] for user-friendly indexing, but store in [i]
+        cout << "Element [" << i + 1 << "] : ";
+        cin >> arr[i];
+    }
+    cout << endl;
+}
+
+/**
+ * Procedure: PrintArray
+ * --------------------
+ * Displays all elements of the array on a single line.
+ */
+void PrintArray(int arr[100], int arrLength)
+{
+    for (int i = 0; i < arrLength; i++)
+    {
+        cout << arr[i] << "  ";
+    }
+    cout << endl;
+}
+
+/**
+ * Function: CountOccurrences
+ * -------------------------
+ * Searches the array for a specific number and returns its frequency.
+ */
+int CountOccurrences(int numberToFind, int arr[100], int arrLength)
+{
+    int counter = 0;
+    // Loop must stop at arrLength - 1 (i < arrLength) to stay within bounds
+    for (int i = 0; i < arrLength; i++)
+    {
+        if (arr[i] == numberToFind)
+        {
+            counter++;
+        }
+    }
+    return counter;
+}
+
+int main()
+{
+    // Variables definition
+    int arr[100];
+    int arrLength;
+    int numberToCheck;
+
+    // 1. Data Input
+    ReadArray(arr, arrLength);
+    
+    // 2. Search Target Input
+    numberToCheck = ReadPositiveNumber("Enter the number you want to check: ");
+
+    // 3. Display Results
+    cout << "\nOriginal Array Elements: " << endl;
+    PrintArray(arr, arrLength);
+
+    cout << "\nAnalysis Result:" << endl;
+    cout << "The number (" << numberToCheck << ") appeared " 
+         << CountOccurrences(numberToCheck, arr, arrLength) << " time(s)." << endl;
+
+    return 0;
+}
