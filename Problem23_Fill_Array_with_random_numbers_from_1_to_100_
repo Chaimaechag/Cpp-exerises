@@ -1,0 +1,71 @@
+#include <iostream>
+#include <cstdlib> // For rand() and srand()
+#include <ctime>   // For time()
+
+using namespace std;
+
+/**
+ * Function: GetRandomNumber
+ * -------------------------
+ * Generates a random integer within a specific range [from, to].
+ * Formula: (rand() % (RangeSize)) + Offset
+ */
+int GetRandomNumber(int from, int to)
+{
+    int randNum = rand() % (to - from + 1) + from;
+    return randNum;
+}
+
+/**
+ * Procedure: FillArrayWithRandomNumbers
+ * -------------------------------------
+ * 1. Prompts the user for the number of elements.
+ * 2. Uses 'Pass by Reference' (&) to update arrLength in the main function.
+ * 3. Fills each index with a random number.
+ */
+void FillArrayWithRandomNumbers(int arr[100], int &arrLength)
+{
+    cout << "Please enter number of elements (1-100): " << endl;
+    cin >> arrLength;
+
+    for (int i = 0; i < arrLength; i++)
+    {
+        // Filling each box [i] with a random number between 1 and 100
+        arr[i] = GetRandomNumber(1, 100);
+    }
+}
+
+/**
+ * Procedure: PrintArray
+ * --------------------
+ * Loops through the array and prints elements separated by spaces.
+ */
+void PrintArray(int arr[100], int arrLength)
+{
+    for (int i = 0; i < arrLength; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+int main()
+{
+    // Seed the random generator with the current time to get different numbers every run
+    srand((unsigned)time(NULL));
+
+    // Array definition with a fixed size of 100
+    int arr[100];
+    int arrLength;
+
+    // --- Execution ---
+    
+    // Fill the array (arrLength will be modified inside this function)
+    FillArrayWithRandomNumbers(arr, arrLength);
+
+    // Display the results
+    cout << "\nArray elements are: ";
+    PrintArray(arr, arrLength);
+
+    return 0;
+}
