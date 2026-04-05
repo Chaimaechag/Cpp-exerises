@@ -1,0 +1,85 @@
+#include <iostream>
+#include <cstdlib> 
+#include <ctime>   
+
+using namespace std;
+
+/**
+ * Function: GetRandomNumber
+ * -------------------------
+ * Generates a random integer within a specific range [from, to].
+ */
+int GetRandomNumber(int from, int to)
+{
+    return rand() % (to - from + 1) + from;
+}
+
+/**
+ * Procedure: FillArrayWithRandomNumbers
+ * -------------------------------------
+ * Fills the array with random integers and updates the length using a reference.
+ */
+void FillArrayWithRandomNumbers(int arr[100], int& arrLength)
+{
+    cout << "Please enter the number of elements: " << endl;
+    cin >> arrLength;
+
+    for (int i = 0; i < arrLength; i++)
+    {
+        arr[i] = GetRandomNumber(1, 100);
+    }
+}
+
+/**
+ * Procedure: PrintArray
+ * --------------------
+ * Displays all elements of the array in a single line.
+ */
+void PrintArray(int arr[100], int arrLength)
+{
+    for (int i = 0; i < arrLength; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+/**
+ * Function: GetSumNumberInArray
+ * ----------------------------
+ * Calculates the total sum of all elements stored in the array.
+ * Logic: Starts with a 'sum' of 0 and adds each element one by one.
+ */
+int GetSumNumberInArray(int arr[100], int arrLength)
+{
+    int sum = 0;
+
+    for (int i = 0; i < arrLength; i++)
+    {
+        // Use compound assignment operator to add current element to total sum
+        sum += arr[i]; 
+    }
+    return sum;
+}
+
+int main()
+{
+    // Seed the random number generator
+    srand((unsigned)time(NULL));
+
+    int arr[100];
+    int arrLength;
+
+    // --- STEP 1: Input & Data Generation ---
+    FillArrayWithRandomNumbers(arr, arrLength);
+
+    // --- STEP 2: Display Data ---
+    cout << "\nGenerated Array Elements: " << endl;
+    PrintArray(arr, arrLength);
+
+    // --- STEP 3: Analysis & Result ---
+    cout << "\nAnalysis Result:" << endl;
+    cout << "The sum of the numbers is: " << GetSumNumberInArray(arr, arrLength) << endl;
+
+    return 0;
+}
