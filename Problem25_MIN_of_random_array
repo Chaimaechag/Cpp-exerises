@@ -1,0 +1,95 @@
+#include <iostream>
+#include <cstdlib> // Required for rand() and srand()
+#include <ctime>   // Required for time() to seed the random generator
+
+using namespace std;
+
+/**
+ * Function: GetRandomNumber
+ * -------------------------
+ * Generates a random integer within a specific range [from, to].
+ * It uses the standard formula to ensure the number stays within bounds.
+ */
+int GetRandomNumber(int from, int to)
+{
+    int randNum = rand() % (to - from + 1) + from;
+    return randNum;
+}
+
+/**
+ * Procedure: FillArrayWithRandomNumbers
+ * -------------------------------------
+ * 1. Prompts the user for the number of elements to process.
+ * 2. Uses 'Pass by Reference' (&) for arrLength to update its value in the main scope.
+ * 3. Fills the array with random integers between 1 and 100.
+ */
+void FillArrayWithRandomNumbers(int arr[100], int &arrLength)
+{
+    cout << "Please enter the number of elements: " << endl;
+    cin >> arrLength;
+
+    for (int i = 0; i < arrLength; i++)
+    {
+        arr[i] = GetRandomNumber(1, 100);
+    }
+}
+
+/**
+ * Procedure: PrintArray
+ * --------------------
+ * Iterates through the filled part of the array and prints elements separated by spaces.
+ */
+void PrintArray(int arr[100], int arrLength)
+{
+    for (int i = 0; i < arrLength; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+/**
+ * Function: GetMinNumberInArray
+ * ----------------------------
+ * Finds the smallest value in the array.
+ * Logic: Initializes 'Min' with the first element (arr[0]) and starts comparing 
+ * from the second element (i = 1) for better performance.
+ */
+int GetMinNumberInArray(int arr[100], int arrLength)
+{
+    // Best practice: Initialize with the first element of the actual data
+    int Min = arr[0];
+
+    for (int i = 1; i < arrLength; i++)
+    {
+        if (arr[i] < Min)
+        {
+            Min = arr[i]; // Update Min when a smaller value is found
+        }
+    }
+    return Min;
+}
+
+int main()
+{
+    // Seeds the random number generator with the current system time
+    // This ensures unique random sequences every time the program runs
+    srand((unsigned)time(NULL));
+
+    // Array definition with a fixed maximum size
+    int arr[100];
+    int arrLength;
+
+    // --- STEP 1: Input & Data Generation ---
+    FillArrayWithRandomNumbers(arr, arrLength);
+
+    // --- STEP 2: Display Data ---
+    cout << "\nGenerated Array Elements: " << endl;
+    PrintArray(arr, arrLength);
+
+    // --- STEP 3: Analysis & Result ---
+    cout << "\nAnalysis Result:" << endl;
+    cout << "The smallest (minimum) number is: " << GetMinNumberInArray(arr, arrLength) << endl;
+
+    return 0;
+}
