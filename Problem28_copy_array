@@ -1,0 +1,90 @@
+#include <iostream>
+#include <cstdlib> // Required for rand() and srand()
+#include <ctime>   // Required for time() to seed the random generator
+
+using namespace std;
+
+/**
+ * Function: GetRandomNumber
+ * -------------------------
+ * Returns a random integer between the 'from' and 'to' range.
+ */
+int GetRandomNumber(int from, int to)
+{
+    return rand() % (to - from + 1) + from;
+}
+
+/**
+ * Procedure: FillArrayWithRandomNumbers
+ * -------------------------------------
+ * Prompts the user for the number of elements and populates the array.
+ * Uses 'Pass by Reference' (&) for arrLength to keep main() updated.
+ */
+void FillArrayWithRandomNumbers(int arr[100], int &arrLength)
+{
+    cout << "Please enter the number of elements: " << endl;
+    cin >> arrLength;
+
+    for (int i = 0; i < arrLength; i++)
+    {
+        arr[i] = GetRandomNumber(1, 100);
+    }
+}
+
+/**
+ * Procedure: PrintArray
+ * --------------------
+ * Iterates through the array and prints each element followed by a space.
+ */
+void PrintArray(int arr[100], int arrLength)
+{
+    for (int i = 0; i < arrLength; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+/**
+ * Procedure: CopyArray
+ * --------------------
+ * Copies every element from the source array to the destination array.
+ * Logic: Uses index-by-index assignment (Destination = Source).
+ */
+void CopyArray(int arrSource[100], int arrDestination[100], int arrLength)
+{
+    for (int i = 0; i < arrLength; i++)
+    {
+        // Copying current element to the new array
+        arrDestination[i] = arrSource[i];
+    }
+}
+
+int main()
+{
+    // Seed the random number generator once at the start of execution
+    srand((unsigned)time(NULL));
+
+    // Array Declarations
+    int arr[100];
+    int arr2[100];
+    int arrLength;
+
+    // --- STEP 1: Input & Random Data Generation ---
+    FillArrayWithRandomNumbers(arr, arrLength);
+
+    // --- STEP 2: Processing (Copying) ---
+    // We populate arr2 using the data from arr
+    CopyArray(arr, arr2, arrLength);
+
+    // --- STEP 3: Displaying Results ---
+    cout << "\n---------------------------------" << endl;
+    cout << "Original Array (arr1): " << endl;
+    PrintArray(arr, arrLength);
+
+    cout << "\nCopied Array (arr2): " << endl;
+    PrintArray(arr2, arrLength);
+    cout << "---------------------------------" << endl;
+
+    return 0;
+}
