@@ -1,0 +1,91 @@
+#include <iostream>
+#include <cmath>
+#include <cstdlib> // For rand() and srand()
+#include <ctime>   // For time()
+
+using namespace std;
+
+// Enum to represent prime number status
+enum enPrimeStatus { Prime = 1, NotPrime = 2 };
+
+/**
+ * Checks if a number is prime.
+ * Returns enPrimeStatus::Prime if true, otherwise NotPrime.
+ */
+enPrimeStatus CheckPrime(int number) {
+    if (number <= 1) return enPrimeStatus::NotPrime;
+
+    int halfLimit = round(number / 2);
+    for (int counter = 2; counter <= halfLimit; counter++) {
+        if (number % counter == 0)
+            return enPrimeStatus::NotPrime;
+    }
+    return enPrimeStatus::Prime;
+}
+
+// Generates a random number in a specific range [from, to]
+int GetRandomNumber(int from, int to) {
+    return rand() % (to - from + 1) + from;
+}
+
+/**
+ * Fills the array with random numbers based on user-defined length.
+ */
+void FillArrayWithRandomNumbers(int arr[100], int &arrLength) {
+    cout << "Please enter the number of elements: ";
+    cin >> arrLength;
+
+    for (int i = 0; i < arrLength; i++) {
+        arr[i] = GetRandomNumber(1, 100);
+    }
+}
+
+/**
+ * Copies only prime numbers from Source array to Destination array.
+ * Uses a reference for arr2Length to update the count of found primes.
+ */
+void CopyOnlyPrimeNumbers(int arrSource[100], int arrDestination[100], int arrSourceLength, int &arrDestLength) {
+    int counter = 0;
+    for (int i = 0; i < arrSourceLength; i++) {
+        if (CheckPrime(arrSource[i]) == enPrimeStatus::Prime) {
+            arrDestination[counter] = arrSource[i];
+            counter++;
+        }
+    }
+    // Update the final count of prime numbers found
+    arrDestLength = counter; 
+}
+
+// Prints array elements separated by spaces
+void PrintArray(int arr[100], int arrLength) {
+    for (int i = 0; i < arrLength; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << "\n";
+}
+
+int main() {
+    // Seed the random generator using current time
+    srand((unsigned)time(NULL));
+
+    int originalArray[100], originalLength = 0;
+    int primeArray[100], primeLength = 0;
+
+    // Step 1: Fill and display the original array
+    FillArrayWithRandomNumbers(originalArray, originalLength);
+    cout << "\nOriginal Array Elements: " << endl;
+    PrintArray(originalArray, originalLength);
+
+    // Step 2: Extract primes to the second array
+    CopyOnlyPrimeNumbers(originalArray, primeArray, originalLength, primeLength);
+
+    // Step 3: Display results
+    cout << "\nPrime Numbers found in Array: " << endl;
+    if (primeLength == 0) {
+        cout << "No prime numbers were found." << endl;
+    } else {
+        PrintArray(primeArray, primeLength);
+    }
+
+    return 0;
+}
