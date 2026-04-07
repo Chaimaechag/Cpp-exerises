@@ -1,0 +1,90 @@
+#include <iostream>
+#include <string>
+#include <cstdlib> // For rand() and srand()
+#include <ctime>   // For time()
+
+using namespace std;
+
+// --- Utility Functions ---
+
+/**
+ * Generates a random integer within a specified range [from, to].
+ */
+int GetRandomNumber(int from, int to) {
+    return rand() % (to - from + 1) + from;
+}
+
+/**
+ * Prompts the user to enter a positive integer and validates it.
+ */
+int ReadPositiveNumber(string message) {
+    int number = 0;
+    do {
+        cout << message << endl;
+        cin >> number;
+    } while (number <= 0);
+    return number;
+}
+
+// --- Array Operations ---
+
+/**
+ * Populates an array with random numbers between 1 and 100.
+ */
+void FillArrayWithRandomNumbers(int arr[100], int arrLength) {
+    for (int i = 0; i < arrLength; i++) {
+        arr[i] = GetRandomNumber(1, 100);
+    }
+}
+
+/**
+ * Sums elements of two source arrays and stores the results in a third array.
+ * Logic: arrSum[i] = arr1[i] + arr2[i]
+ */
+void SumTwoArrays(int arr1[100], int arr2[100], int arrSum[100], int arrLength) {
+    for (int i = 0; i < arrLength; i++) {
+        arrSum[i] = arr1[i] + arr2[i];
+    }
+}
+
+/**
+ * Prints the elements of an array separated by spaces.
+ */
+void PrintArray(int arr[100], int arrLength) {
+    for (int i = 0; i < arrLength; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << "\n";
+}
+
+// --- Main Application ---
+
+int main() {
+    // Seed the random number generator with current time
+    srand((unsigned)time(NULL));
+
+    // Arrays declaration (Max size 100)
+    int arr1[100], arr2[100], arrSum[100];
+    
+    // Step 1: Get array length from user
+    int arrLength = ReadPositiveNumber("Please enter the number of elements (1-100):");
+
+    // Step 2: Fill both arrays with random data
+    FillArrayWithRandomNumbers(arr1, arrLength);
+    FillArrayWithRandomNumbers(arr2, arrLength);
+
+    // Step 3: Calculate the sum of both arrays into the third array
+    SumTwoArrays(arr1, arr2, arrSum, arrLength);
+
+    // Step 4: Display results
+    cout << "\nArray 1 elements:\n";
+    PrintArray(arr1, arrLength);
+
+    cout << "\nArray 2 elements:\n";
+    PrintArray(arr2, arrLength);
+
+    cout << "\nSum of Array 1 and Array 2 (Result Array):\n";
+    PrintArray(arrSum, arrLength);
+
+    return 0; // Successful execution
+}
