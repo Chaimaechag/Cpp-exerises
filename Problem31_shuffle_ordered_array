@@ -1,0 +1,79 @@
+#include <iostream>
+#include <string>
+#include <cstdlib> // Correct spelling for rand/srand
+#include <ctime>   // Correct spelling for time()
+
+using namespace std;
+
+// Function to get a positive number from the user
+int ReadPositiveNumber(string message) {
+    int number = 0;
+    do {
+        cout << message << endl;
+        cin >> number;
+    } while (number <= 0);
+    return number;
+}
+
+// The "Waiter" function: swaps two numbers using a third "temp" variable
+void SwapFunction(int& a, int& b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+// Fills the array with simple numbers: 1, 2, 3, 4...
+void FillArray(int arr[100], int arrLength) {
+    for (int i = 0; i < arrLength; i++) {
+        arr[i] = i + 1;
+    }
+}
+
+// Generates a random number between a "from" and "to" range
+int GetRandomNumber(int from, int to) {
+    int randomNum = rand() % (to - from + 1) + from;
+    return randomNum;
+}
+
+// Prints all elements of the array on one line
+void PrintArray(int arr[100], int arrLength) {
+    for (int i = 0; i < arrLength; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+// The "Shuffling" function: mixes the array elements randomly
+void ShuffleArray(int arr[100], int arrLength) {
+    for (int i = 0; i < arrLength; i++) {
+        /* 
+           We pick two random "addresses" (indices).
+           We use -1 because human counting is 1-10, 
+           but computer counting is 0-9.
+        */
+        int index1 = GetRandomNumber(1, arrLength) - 1;
+        int index2 = GetRandomNumber(1, arrLength) - 1;
+
+        SwapFunction(arr[index1], arr[index2]);
+    }
+}
+
+int main() {
+    // This line makes the random numbers different every time you run the program
+    srand((unsigned)time(NULL));
+
+    int arr[100];
+    int arrLength = ReadPositiveNumber("Please enter the number of elements:");
+
+    // 1. Fill the array with 1, 2, 3...
+    FillArray(arr, arrLength);
+    cout << "\nArray before shuffling:\n";
+    PrintArray(arr, arrLength);
+
+    // 2. Mix the numbers randomly
+    ShuffleArray(arr, arrLength);
+    cout << "\nArray after shuffling:\n";
+    PrintArray(arr, arrLength);
+
+    return 0;
+}
