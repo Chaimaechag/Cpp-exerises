@@ -1,0 +1,98 @@
+#include <iostream>
+#include <string>
+#include <ctime>
+#include <cstdlib>
+
+using namespace std;
+
+/**
+ * Generates a random integer within a specific range [from, to].
+ * Used for creating dynamic test data.
+ */
+int RandomNumber(int from, int to) {
+    return rand() % (to - from + 1) + from;
+}
+
+/**
+ * Populates the array with random numbers based on user input.
+ * The length is passed by reference (&) to update the variable in main.
+ */
+void FillArray(int arr[100], int &arrLength) {
+    cout << "Please enter the number of elements: " << endl;
+    cin >> arrLength;
+    for (int i = 0; i < arrLength; i++) {
+        arr[i] = RandomNumber(1, 100);
+    }
+}
+
+/**
+ * Iterates through the array and prints each element to the console.
+ */
+void PrintArray(int arr[100], int arrLength) {
+    for (int i = 0; i < arrLength; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+/**
+ * LINEAR SEARCH ALGORITHM:
+ * Searches for a target number and returns its index.
+ * @return The index (0 to n-1) if found, otherwise returns -1.
+ */
+int FindNumberPositionInArray(int arr[100], int arrLength, int number) {
+    for (int i = 0; i < arrLength; i++) {
+        // Check if current element matches the target
+        if (arr[i] == number) {
+            return i; // Stop search and return position
+        }
+    }
+    return -1; // Number not found in the array
+}
+
+/**
+ * Reads and validates a positive integer from user input.
+ */
+int ReadPositiveNumber(string message) {
+    int number = 0;
+    do {
+        cout << message << endl;
+        cin >> number;
+    } while (number <= 0);
+    return number;
+}
+
+/**
+ * BOOLEAN WRAPPER:
+ * Returns true if the number exists in the array, false otherwise.
+ * This improves code readability in the main logic.
+ */
+bool IsNumberInArray(int number, int arr[100], int arrLength) {
+    // Logic: If result is not -1, the number exists
+    return FindNumberPositionInArray(arr, arrLength, number) != -1;
+}
+
+int main() {
+    // Seed the random number generator using system time
+    srand((unsigned)time(NULL));
+
+    int arr[100], arrLength;
+
+    // Step 1: Initialize data
+    FillArray(arr, arrLength);
+    cout << "\n--- Current Array Content ---\n";
+    PrintArray(arr, arrLength);
+
+    // Step 2: User search request
+    int numberToSearch = ReadPositiveNumber("\nPlease enter the number you are looking for:");
+
+    // Step 3: Check existence and display result
+    // Using IsNumberInArray makes the 'if' condition very clear
+    if (!IsNumberInArray(numberToSearch, arr, arrLength)) {
+        cout << "Result: The number was NOT found in the array. :(" << endl;
+    } else {
+        cout << "Result: Yes, the number was found! :)" << endl;
+    }
+
+    return 0;
+}
