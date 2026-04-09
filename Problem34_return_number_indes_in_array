@@ -1,0 +1,95 @@
+#include <iostream>
+#include <string>
+#include <ctime>
+#include <cstdlib>
+
+using namespace std;
+
+/**
+ * Generates a random integer within a given range.
+ */
+int RandomNumber(int from, int to) {
+    return rand() % (to - from + 1) + from;
+}
+
+/**
+ * Fills an array with random numbers and updates the array length.
+ * Notice the use of & (Reference) to pass the length back to main.
+ */
+void FillArrayWithRandomNumbers(int arr[100], int &arrLength) {
+    cout << "Please enter the number of elements: " << endl;
+    cin >> arrLength;
+    for (int i = 0; i < arrLength; i++) {
+        arr[i] = RandomNumber(1, 100);
+    }
+}
+
+/**
+ * Displays the array elements on a single line.
+ */
+void PrintArray(int arr[100], int arrLength) {
+    for (int i = 0; i < arrLength; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+/**
+ * Validates and reads a positive integer from the user.
+ */
+int ReadPositiveNumber(string message) {
+    int number = 0;
+    do {
+        cout << message << endl;
+        cin >> number;
+    } while (number <= 0);
+    return number;
+}
+
+/**
+ * CORE LOGIC: Linear Search Algorithm.
+ * Iterates through the array to find the target number.
+ * @return The index of the number if found, otherwise returns -1.
+ */
+int FindNumberPositionInArray(int arr[100], int arrLength, int number) {
+    for (int i = 0; i < arrLength; i++) {
+        // Compare the current element arr[i] with the target number
+        if (arr[i] == number) {
+            return i; // Stop search and return the position (index)
+        }
+    }
+    return -1; // Return -1 if the loop finishes without finding the number
+}
+
+int main() {
+    // Seed the random number generator
+    srand((unsigned)time(NULL));
+
+    int arr[100];
+    int arrLength;
+
+    // Step 1: Populate the array
+    FillArrayWithRandomNumbers(arr, arrLength);
+
+    // Step 2: Display the array
+    cout << "\nGenerated Array Content:\n";
+    PrintArray(arr, arrLength);
+
+    // Step 3: Get the search target from the user
+    int numberToSearch = ReadPositiveNumber("\nPlease enter the number you want to search for:");
+    
+    cout << "Searching for: " << numberToSearch << "..." << endl;
+
+    // Step 4: Execute the search and store the result
+    short numberPosition = FindNumberPositionInArray(arr, arrLength, numberToSearch);
+
+    // Step 5: Analyze and display search results
+    if (numberPosition == -1) {
+        cout << "The number was not found in the array. :(" << endl;
+    } else {
+        cout << "The number was found at position (Index): " << numberPosition << endl;
+        cout << "The number's order in the list is: " << numberPosition + 1 << endl;
+    }
+
+    return 0;
+}
