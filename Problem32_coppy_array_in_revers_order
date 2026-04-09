@@ -1,0 +1,74 @@
+#include <iostream>
+#include <string>
+#include <ctime>   
+#include <cstdlib> 
+
+using namespace std;
+
+/**
+ * Generates a random integer within a given range.
+ * @param from The starting point of the range.
+ * @param to The ending point of the range.
+ * @return A random integer between 'from' and 'to'.
+ */
+int GetRandomNumber(int from, int to) {
+    return rand() % (to - from + 1) + from;
+}
+
+/**
+ * Prompts user for array size and populates it with random numbers.
+ * Uses pass-by-reference (&) to update the length in the calling function.
+ */
+void FillArray(int arr[100], int &arrLength) {
+    cout << "Please enter the number of elements: " << endl;
+    cin >> arrLength;
+
+    for (int i = 0; i < arrLength; i++) {
+        arr[i] = GetRandomNumber(1, 100);
+    }
+}
+
+/**
+ * Copies elements from a source array to a destination array in reverse order.
+ * Formula: arrDestination[i] = arrSource[arrLength - 1 - i]
+ */
+void CopyArrayInReverse(int arrSource[100], int arrDestination[100], int arrLength) {
+    for (int i = 0; i < arrLength; i++) {
+        // We subtract 1 from length because array indices are 0-indexed
+        arrDestination[i] = arrSource[arrLength - 1 - i];
+    }
+}
+
+/**
+ * Iterates through the array and prints each element to the console.
+ */
+void PrintArray(int arr[100], int arrLength) {
+    for (int i = 0; i < arrLength; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    // Initialize random seed based on current system time
+    srand((unsigned)time(NULL));
+
+    int arr[100];
+    int arrLength; 
+
+    // Step 1: Input and Generation
+    FillArray(arr, arrLength);
+
+    // Step 2: Reverse Copying Process
+    int arr2[100];
+    CopyArrayInReverse(arr, arr2, arrLength);
+
+    // Step 3: Output Results
+    cout << "\nOriginal Array (Random Data):\n";
+    PrintArray(arr, arrLength);
+
+    cout << "\nReversed Copied Array:\n";
+    PrintArray(arr2, arrLength);
+
+    return 0;
+}
