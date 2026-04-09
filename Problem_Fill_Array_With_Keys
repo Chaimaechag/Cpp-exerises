@@ -1,0 +1,91 @@
+#include <iostream>
+#include <string>
+#include <ctime>
+#include <cstdlib>
+
+using namespace std;
+
+// Enum to make character types readable and easy to use
+enum enCharType {
+    smallLetter = 1, 
+    CapitalLetter = 2, 
+    specialLetter = 3,
+    digit = 4
+};
+
+// Generates a random number between a specific range
+int RandomNumber(int from, int to) {
+    return rand() % (to - from + 1) + from;
+}
+
+// Picks a single character based on the chosen category (ASCII logic)
+char GetRandomCharacter(enCharType CharType) {
+    switch (CharType) {
+        case enCharType::CapitalLetter:
+            return char(RandomNumber(65, 90));
+        case enCharType::smallLetter:
+            return char(RandomNumber(97, 122));
+        case enCharType::specialLetter:
+            return char(RandomNumber(33, 47));
+        case enCharType::digit:
+            return char(RandomNumber(48, 57));
+        default:
+            return '\0';
+    }
+}
+
+// Helper function to build a "word" or "segment" of a specific length
+string GenerateWord(enCharType CharType, short Length) {
+    string word = ""; 
+    for (int i = 1; i <= Length; i++) { 
+        word = word + GetRandomCharacter(CharType);
+    }
+    return word;
+}
+
+// Logic: Joins 4 segments of 4 letters to create a full License Key
+string GenerateKey() {
+    string key = ""; 
+    key = GenerateWord(enCharType::CapitalLetter, 4) + "_";
+    key = key + GenerateWord(enCharType::CapitalLetter, 4) + "_";
+    key = key + GenerateWord(enCharType::CapitalLetter, 4) + "_";
+    key = key + GenerateWord(enCharType::CapitalLetter, 4);
+    return key;
+}
+
+// Fills an array with a specific number of generated keys
+void FillArrayWithKeys(string arr[100], int arrLength) {
+    for (int i = 0; i < arrLength; i++) {
+        arr[i] = GenerateKey();
+    }
+}
+
+// Displays the content of the array in a clean format
+void PrintArrayString(string arr[100], int Length) {
+    cout << "\nYour generated keys are:\n";
+    for (int i = 0; i < Length; i++) {
+        cout << "Key [" << i << "] : " << arr[i] << "\n";
+    }
+}
+
+int ReadPositiveNumber(string message) {
+    int number = 0; 
+    do {
+        cout << message << endl; 
+        cin >> number; 
+    } while (number <= 0);
+    return number;
+}
+
+int main() {
+    // Seed the random number generator using current time
+    srand((unsigned)time(NULL));
+
+    string arr[100]; 
+    int arrLength = ReadPositiveNumber("Please enter how many keys you want to generate:");
+
+    FillArrayWithKeys(arr, arrLength);
+    PrintArrayString(arr, arrLength);
+
+    return 0;
+}
