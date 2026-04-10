@@ -1,0 +1,87 @@
+#include <iostream>
+#include <string>
+#include <ctime>
+#include <cstdlib>
+
+using namespace std;
+
+/**
+ * Function: RandomNumber
+ * Purpose: Generates a random integer between [from] and [to].
+ */
+int RandomNumber(int from, int to) {
+    return rand() % (to - from + 1) + from;
+}
+
+/**
+ * Function: FilllArray
+ * Purpose: Gets array size from user and fills it with random numbers.
+ */
+void FilllArray(int arr[100], int &arrLength) {
+    cout << "Please enter the number of elements: ";
+    cin >> arrLength;
+    for (int i = 0; i < arrLength; i++) {
+        arr[i] = RandomNumber(1, 100);
+    }
+}
+
+/**
+ * Function: AddNumberArray
+ * Purpose: Reusable helper to add a single element to any array and update its length.
+ */
+void AddNumberArray(int number, int arr[100], int &arrLength) { 
+    arrLength++;
+    arr[arrLength - 1] = number;
+}
+
+/**
+ * Function: CopyOddNumbers
+ * Purpose: Filters odd numbers from the source array and copies them to the destination array.
+ */
+void CopyOddNumbers(int arrSource[100], int arrDestination[100], int arrLength, int &arrLengthDestination) { 
+    for (int i = 0; i < arrLength; i++) {
+        // If the number is odd (remainder of division by 2 is not 0)
+        if (arrSource[i] % 2 != 0) {
+            AddNumberArray(arrSource[i], arrDestination, arrLengthDestination);
+        }
+    }
+}
+
+/**
+ * Function: PrintArray
+ * Purpose: Iterates and prints all elements of an array.
+ */
+void PrintArray(int arr[100], int arrLength) {
+    for (int i = 0; i < arrLength; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    // Seed the random generator with current time
+    srand((unsigned)time(NULL));
+
+    int arr[100], arr2[100];
+    int arrLength = 0, arr2Length = 0;
+
+    // 1. Fill the first array
+    FilllArray(arr, arrLength);
+
+    // 2. Filter and copy odd numbers to the second array
+    CopyOddNumbers(arr, arr2, arrLength, arr2Length);
+
+    // 3. Output results
+    cout << "\n--- Array Analysis ---" << endl;
+    cout << "Original Array (Array 1):" << endl;
+    PrintArray(arr, arrLength);
+
+    cout << "\nFiltered Odd Numbers (Array 2):" << endl;
+    if (arr2Length == 0) {
+        cout << "(No odd numbers found)" << endl;
+    } else {
+        PrintArray(arr2, arr2Length);
+    }
+
+    return 0;
+}
