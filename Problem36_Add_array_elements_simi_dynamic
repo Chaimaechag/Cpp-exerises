@@ -1,0 +1,79 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+/**
+ * Function: ReadNumber
+ * --------------------
+ * Prompts the user to input an integer and returns it.
+ */
+int ReadNumber() {
+    int number;
+    cout << "Please enter a number: ";
+    cin >> number;
+    return number;
+}
+
+/**
+ * Function: AddArrayElements
+ * --------------------------
+ * Appends a new number to the array and updates the current length.
+ * @param number: The value to be added.
+ * @param arr: The target integer array.
+ * @param arrLength: Passed by reference (&) to ensure the count is updated globally.
+ */
+void AddArrayElements(int number, int arr[100], int &arrLength) {
+    // Increment the length to account for the new element
+    arrLength++;
+    // Store the number at the correct index (length - 1)
+    arr[arrLength - 1] = number;
+}
+
+/**
+ * Function: InPutNumberInArray
+ * ----------------------------
+ * Controls the flow of adding elements using a do-while loop.
+ * It coordinates between ReadNumber and AddArrayElements.
+ */
+void InPutNumberInArray(int arr[100], int &arrLength) {
+    bool addMore = true;
+    do {
+        // Nesting: Pass the result of ReadNumber directly to the adder function
+        AddArrayElements(ReadNumber(), arr, arrLength);
+
+        cout << "Do you want to add another number? [1] Yes, [0] No: ";
+        cin >> addMore;
+    } while (addMore);
+}
+
+/**
+ * Function: PrintArray
+ * --------------------
+ * Iterates through the array and displays all stored elements.
+ */
+void PrintArray(int arr[100], int arrLength) {
+    for (int i = 0; i < arrLength; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+/**
+ * Main Entry Point
+ */
+int main() {
+    int arr[100];      // Static array with a fixed capacity of 100
+    int arrLength = 0; // Initializing array length as empty
+
+    // Start the dynamic input process
+    InPutNumberInArray(arr, arrLength);
+
+    // Final Output Results
+    cout << "\n--- Array Summary ---" << endl;
+    cout << "Total elements count: " << arrLength << endl;
+    cout << "Stored numbers: ";
+    PrintArray(arr, arrLength);
+
+    return 0;
+}
