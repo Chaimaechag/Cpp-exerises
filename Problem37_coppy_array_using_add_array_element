@@ -1,0 +1,83 @@
+#include <iostream>
+#include <string>
+#include <ctime>
+#include <cstdlib>
+
+using namespace std;
+
+/**
+ * Generates a random integer within a specific range [from, to].
+ */
+int RandomNumber(int from, int to) {
+    return rand() % (to - from + 1) + from;
+}
+
+/**
+ * Prompts user for size and fills an array with random numbers (1-100).
+ * Uses reference (&) to update the original length in main.
+ */
+void FilllArray(int arr[100], int &arrLength) {
+    cout << "Enter number of elements: ";
+    cin >> arrLength;
+    for (int i = 0; i < arrLength; i++) {
+        arr[i] = RandomNumber(1, 100);
+    }
+}
+
+/**
+ * REUSABLE WORKER: Adds one specific number to any given array.
+ * This function handles the logic of incrementing the count and placement.
+ */
+void AddNumberArray(int number, int arr[100], int &arrLength) { 
+    arrLength++;                   // Increase the counter
+    arr[arrLength - 1] = number;   // Place the element at the last index
+}
+
+/**
+ * MANAGER FUNCTION: Copies elements from source to destination.
+ * It iterates through the source and calls AddNumberArray for each element.
+ */
+void CopyArrayUsingAddArrayElement(int arrSource[100], int arrDestinaion[100], int arrLength, int &arrDestinationLength) {
+    for (int i = 0; i < arrLength; i++) {
+        // Reuse the adder function to keep logic clean
+        AddNumberArray(arrSource[i], arrDestinaion, arrDestinationLength);
+    }
+}
+
+/**
+ * Simple utility to display array elements on one line.
+ */
+void PrintArray(int arr[100], int arrLength) {
+    for (int i = 0; i < arrLength; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    // Seed random number generator
+    srand((unsigned)time(NULL));
+
+    // Array 1 Setup
+    int arr[100];
+    int arrLength = 0;
+    FilllArray(arr, arrLength);
+
+    // Array 2 Setup (The Copy)
+    int arr2[100];
+    int arr2Length = 0;
+
+    // Execute Logic
+    CopyArrayUsingAddArrayElement(arr, arr2, arrLength, arr2Length);
+
+    // Display Results
+    cout << "\n----------------------------" << endl;
+    cout << "Original Array (Array 1):" << endl;
+    PrintArray(arr, arrLength);
+
+    cout << "\nCopied Array (Array 2):" << endl;
+    PrintArray(arr2, arr2Length);
+    cout << "----------------------------" << endl;
+
+    return 0;
+}
