@@ -1,0 +1,107 @@
+#include <iostream>
+#include <string>
+#include <ctime>
+#include <cstdlib>
+#include <cmath>
+
+using namespace std;
+
+// Enum to make code more readable instead of using 0 and 1
+enum enPrimeNumber { Prime = 1, NotPrime = 2 };
+
+/**
+ * Function: IsPrimeNumber
+ * Checks if a number is prime.
+ * Logic: Loops from 2 to number/2. If divisible, it's not prime.
+ */
+enPrimeNumber IsPrimeNumber(int number) {
+    if (number <= 1) return enPrimeNumber::NotPrime;
+
+    int M = round(number / 2);
+    for (int i = 2; i <= M; i++) {
+        if (number % i == 0)
+            return enPrimeNumber::NotPrime; // Found a divisor, exit early
+    }
+    return enPrimeNumber::Prime; // No divisors found, it's prime
+}
+
+/**
+ * Function: RandomNumber
+ * Generates a random integer between [from] and [to].
+ */
+int RandomNumber(int from, int to) {
+    return rand() % (to - from + 1) + from;
+}
+
+/**
+ * Function: FilllArray
+ * Populates an array with random numbers based on user input size.
+ */
+void FilllArray(int arr[100], int& arrLength) {
+    cout << "Please enter the number of elements: ";
+    cin >> arrLength;
+    for (int i = 0; i < arrLength; i++) {
+        arr[i] = RandomNumber(1, 100);
+    }
+}
+
+/**
+ * Function: AddNumberArray
+ * Core logic to add an element to an array and increment its pointer/length.
+ */
+void AddNumberArray(int number, int arr[100], int& arrLength) {
+    arrLength++;
+    arr[arrLength - 1] = number;
+}
+
+/**
+ * Function: CopyPrimeNumbers
+ * Filters prime numbers from the source array and copies them to the destination array.
+ */
+void CopyPrimeNumbers(int arrSource[100], int arrDestination[100], int arrLength, int& arrLengthDestination) {
+    for (int i = 0; i < arrLength; i++) {
+        // Condition: Only add if the function returns 'Prime'
+        if (IsPrimeNumber(arrSource[i]) == enPrimeNumber::Prime) {
+            AddNumberArray(arrSource[i], arrDestination, arrLengthDestination);
+        }
+    }
+}
+
+/**
+ * Function: PrintArray
+ * Utility to display array elements on a single line.
+ */
+void PrintArray(int arr[100], int arrLength) {
+    for (int i = 0; i < arrLength; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    // Seed the random generator
+    srand((unsigned)time(NULL));
+
+    int arr[100], arr2[100];
+    int arrLength = 0, arr2Length = 0;
+
+    // Step 1: Fill source array
+    FilllArray(arr, arrLength);
+
+    // Step 2: Process and copy primes
+    CopyPrimeNumbers(arr, arr2, arrLength, arr2Length);
+
+    // Step 3: Display results
+    cout << "\n--- Array Processing Results ---" << endl;
+    cout << "Original Array Content:" << endl;
+    PrintArray(arr, arrLength);
+
+    cout << "\nPrime Numbers Filtered (Array 2):" << endl;
+    if (arr2Length == 0) {
+        cout << "(No prime numbers found in the generated set)" << endl;
+    } else {
+        PrintArray(arr2, arr2Length);
+    }
+
+    return 0;
+}
