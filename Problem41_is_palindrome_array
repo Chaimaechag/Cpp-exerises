@@ -1,0 +1,75 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+/**
+ * Function: FillArray
+ * Purpose: Fills the array with a set of numbers to test palindrome logic.
+ */
+void FillArray(int arr[100], int &arrLength)
+{
+    arrLength = 6;
+    arr[0] = 10;
+    arr[1] = 20;
+    arr[2] = 30;
+    arr[3] = 30;
+    arr[4] = 20;
+    arr[5] = 10;
+}
+
+/**
+ * Function: PrintArray
+ * Purpose: Displays array elements on the screen.
+ */
+void PrintArray(int arr[100], int arrLength)
+{
+    for (int i = 0; i < arrLength; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+/**
+ * Function: IsPalindrome
+ * Purpose: Checks if the array is a palindrome (reads the same forwards and backwards).
+ * Efficiency: Only loops until the middle of the array (arrLength / 2).
+ */
+bool IsPalindrome(int arr[100], int arrLength)
+{
+    // We only need to check half of the array
+    for (int i = 0; i < arrLength / 2; i++)
+    {
+        // Compare element from start with corresponding element from end
+        if (arr[i] != arr[arrLength - i - 1])
+        {
+            return false; // Mismatch found, not a palindrome
+        }
+    }
+    return true; // All elements matched
+}
+
+int main()
+{
+    int arr[100], arrLength;
+
+    // 1. Initialize the array
+    FillArray(arr, arrLength);
+
+    // 2. Output the array content
+    cout << "\nYour array is: " << endl;
+    PrintArray(arr, arrLength);
+
+    // 3. Check and display result
+    if (IsPalindrome(arr, arrLength))
+    {
+        cout << "\nResult: The array IS a palindrome." << endl;
+    }
+    else
+    {
+        cout << "\nResult: The array is NOT a palindrome." << endl;
+    }
+
+    return 0;
+}
