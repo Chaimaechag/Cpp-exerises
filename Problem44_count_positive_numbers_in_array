@@ -1,0 +1,90 @@
+#include <iostream>   // Input and output operations
+#include <string>     // String operations
+#include <cstdlib>    // Standard library for rand() and srand()
+#include <ctime>      // Time library for seeding random numbers
+
+using namespace std;
+
+/**
+ * Function: RandomNumber
+ * Purpose: Generates a random integer within the range [From, To].
+ * Returns: Random integer.
+ */
+int RandomNumber(int From, int To)
+{
+    // Logic: Calculate range and shift by 'From' value
+    return rand() % (To - From + 1) + From;
+}
+
+/**
+ * Function: FillArrayWithRandomNumbers
+ * Purpose: Ask user for array size and fill it with random numbers (-100 to 100).
+ * Note: Uses a reference for arrLength to update the value in main().
+ */
+void FillArrayWithRandomNumbers(int arr[100], int &arrLength)
+{
+    cout << "Please enter the number of elements (Max 100): ";
+    cin >> arrLength;
+
+    for (int i = 0; i < arrLength; i++)
+    {
+        arr[i] = RandomNumber(-100, 100);
+    }
+}
+
+/**
+ * Function: PrintArray
+ * Purpose: Displays array elements on a single line separated by spaces.
+ */
+void PrintArray(int arr[100], int arrLength)
+{
+    for (int i = 0; i < arrLength; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+/**
+ * Function: CountPositiveNumbers
+ * Purpose: Iterates through the array to count elements >= 0.
+ * Returns: Total count of positive numbers found.
+ */
+int CountPositiveNumbers(int arr[100], int arrLength)
+{
+    int Counter = 0;
+    for (int i = 0; i < arrLength; i++)
+    {
+        // Logic: 0 is often considered positive in basic programming exercises
+        if (arr[i] >= 0)
+        {
+            Counter++;
+        }
+    }
+    return Counter;
+}
+
+/**
+ * Main function: Execution starting point.
+ */
+int main()
+{
+    // Seed the random number generator with current time
+    srand((unsigned)time(NULL));
+
+    int arr[100];
+    int arrLength = 0;
+
+    // 1. Fill the array using user input and random generator
+    FillArrayWithRandomNumbers(arr, arrLength);
+
+    // 2. Output the generated array
+    cout << "\nGenerated Array Elements:" << endl;
+    PrintArray(arr, arrLength);
+
+    // 3. Output the final count of positive numbers
+    cout << "\nThe total number of positive numbers is: ";
+    cout << CountPositiveNumbers(arr, arrLength) << endl;
+
+    return 0;
+}
