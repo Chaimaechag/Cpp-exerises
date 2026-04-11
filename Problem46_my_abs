@@ -1,0 +1,54 @@
+#include <iostream>   // For input and output operations
+#include <cmath>      // For built-in math functions like abs()
+
+using namespace std;
+
+/**
+ * Function: ReadNumber
+ * Purpose: Prompts the user to enter an integer and returns the input.
+ * Returns: The integer value entered by the user.
+ */
+int ReadNumber()
+{
+    int number;
+    cout << "Please enter a number: ";
+    cin >> number;
+    return number;
+}
+
+/**
+ * Function: myabsvalue
+ * Purpose: Manually calculates the absolute value of an integer.
+ * Logic: 
+ * - If the number is positive or zero, it returns the number as is.
+ * - If the number is negative, it returns (number * -1) to make it positive.
+ */
+int myabsvalue(int number)
+{
+    if (number >= 0)
+    {
+        return number;
+    }
+    else
+    {
+        // Multiplying a negative number by -1 converts it to positive
+        return number * -1;
+    }
+}
+
+/**
+ * Main Function: The entry point of the program.
+ */
+int main()
+{
+    // 1. Get the number from user input
+    int number = ReadNumber();
+
+    // 2. Display the result using the custom-built absolute function
+    cout << "\nMy custom absolute value is: " << myabsvalue(number) << endl;
+
+    // 3. Display the result using the standard C++ library function for comparison
+    cout << "C++ built-in abs() value is: " << abs(number) << endl;
+
+    return 0; // Indicate successful program execution
+}
