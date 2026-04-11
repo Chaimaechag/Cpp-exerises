@@ -1,0 +1,92 @@
+#include <iostream>   // For input and output operations
+#include <string>     // For string support (if needed)
+#include <cstdlib>    // For rand() and srand()
+#include <ctime>      // For time() to seed the random generator
+
+using namespace std;
+
+/**
+ * Function: RandomNumber
+ * Purpose: Generates a random integer within the inclusive range [From, To].
+ */
+int RandomNumber(int From, int To)
+{
+    // Generating a random number using the modulo operator
+    return rand() % (To - From + 1) + From;
+}
+
+/**
+ * Function: FillArrayWithRandomNumbers
+ * Purpose: Fills an array with random integers between -100 and 100.
+ * Parameters: 
+ * - arr[100]: The target array.
+ * - arrLength: Reference to update the length in main().
+ */
+void FillArrayWithRandomNumbers(int arr[100], int &arrLength)
+{
+    cout << "Please enter the number of elements: ";
+    cin >> arrLength;
+
+    for (int i = 0; i < arrLength; i++)
+    {
+        // Filling array with values from -100 to 100
+        arr[i] = RandomNumber(-100, 100);
+    }
+}
+
+/**
+ * Function: PrintArray
+ * Purpose: Displays array elements separated by spaces.
+ */
+void PrintArray(int arr[100], int arrLength)
+{
+    for (int i = 0; i < arrLength; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+/**
+ * Function: NegativeCount
+ * Purpose: Counts how many elements in the array are less than 0.
+ * Returns: Total count of negative numbers.
+ */
+int NegativeCount(int arr[100], int arrLength)
+{
+    int Counter = 0;
+    for (int i = 0; i < arrLength; i++)
+    {
+        // Check if the current element is negative
+        if (arr[i] < 0)
+        {
+            Counter++;
+        }
+    }
+    return Counter;
+}
+
+/**
+ * Main Function: The entry point of the application.
+ */
+int main()
+{
+    // Seed the random number generator with current system time
+    srand((unsigned)time(NULL));
+
+    int arr[100];
+    int arrLength = 0;
+
+    // 1. Fill the array with random numbers
+    FillArrayWithRandomNumbers(arr, arrLength);
+
+    // 2. Print the generated elements
+    cout << "\nGenerated Array Elements:" << endl;
+    PrintArray(arr, arrLength);
+
+    // 3. Output the result of negative numbers count
+    cout << "\nThe total number of negative numbers is: ";
+    cout << NegativeCount(arr, arrLength) << endl;
+
+    return 0;
+}
