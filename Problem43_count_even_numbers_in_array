@@ -1,0 +1,83 @@
+#include <iostream>
+#include <string>
+#include <ctime>
+#include <cstdlib>
+
+using namespace std;
+
+/**
+ * Function: RandomNumber
+ * Purpose: Generates a random integer between a specific range [from, to].
+ */
+int RandomNumber(int from, int to)
+{
+    return rand() % (to - from + 1) + from;
+}
+
+/**
+ * Function: FillArray
+ * Purpose: Asks the user for array size and fills it with random numbers (1-100).
+ */
+void FillArray(int arr[100], int &arrLength)
+{
+    cout << "Please enter the number of elements you want in the array: ";
+    cin >> arrLength;
+    for (int i = 0; i < arrLength; i++)
+    {
+        arr[i] = RandomNumber(1, 100);
+    }
+}
+
+/**
+ * Function: PrintArray
+ * Purpose: Prints all the elements stored in the array.
+ */
+void PrintArray(int arr[100], int arrLength)
+{
+    for (int i = 0; i < arrLength; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+/**
+ * Function: CountEvenNumbers
+ * Purpose: Iterates through the array and calculates how many numbers are even.
+ * Returns: The total count of even numbers.
+ */
+int CountEvenNumbers(int arr[100], int arrLength)
+{
+    int counter = 0;
+    for (int i = 0; i < arrLength; i++)
+    {
+        // Using modulo operator: if remainder is 0, the number is even
+        if (arr[i] % 2 == 0)
+        {
+            counter++;
+        }
+    }
+    return counter;
+}
+
+int main()
+{
+    // Seed the random number generator with current time
+    srand((unsigned)time(NULL));
+
+    int arr[100], arrLength;
+
+    // 1. Initialize and fill the array
+    FillArray(arr, arrLength);
+
+    // 2. Display the generated array
+    cout << "\nYour generated array is: " << endl;
+    PrintArray(arr, arrLength);
+
+    // 3. Calculate and DISPLAY the result
+    // Note: We wrap the function call in 'cout' to see the returned value.
+    cout << "\nThe total number of even numbers in your array is: ";
+    cout << CountEvenNumbers(arr, arrLength) << endl;
+
+    return 0;
+}
