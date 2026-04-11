@@ -1,0 +1,102 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+/**
+ * Function: FillArray
+ * Purpose: Initializes the source array with hardcoded values (some duplicates included).
+ */
+void FillArray(int arr[100], int &arrLength)
+{
+    arrLength = 10;
+    arr[0] = 10; arr[1] = 10; arr[2] = 10;
+    arr[3] = 50; arr[4] = 50;
+    arr[5] = 70; arr[6] = 70; arr[7] = 70; arr[8] = 70;
+    arr[9] = 90;
+}
+
+/**
+ * Function: PrintArray
+ * Purpose: Iterates through the array and prints its elements.
+ */
+void PrintArray(int arr[100], int arrLength)
+{
+    for (int i = 0; i < arrLength; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+/**
+ * Function: FinfNumberPosition
+ * Purpose: Searches for a number and returns its index. Returns -1 if not found.
+ */
+short FinfNumberPosition(int number, int arr[100], int arrLength)
+{
+    for (int i = 0; i < arrLength; i++)
+    {
+        if (arr[i] == number)
+            return i; // Number found, exit and return position
+    }
+    return -1; // Number not found after checking entire array
+}
+
+/**
+ * Function: IsNumberInArray
+ * Purpose: Returns true if the number exists in the array, false otherwise.
+ */
+bool IsNumberInArray(int number, int arr[100], int arrLength)
+{
+    // Reusing the position finder: if it's not -1, the number exists
+    return FinfNumberPosition(number, arr, arrLength) != -1;
+}
+
+/**
+ * Function: AddArrayElement
+ * Purpose: Dynamically adds a number to the end of the array and updates length.
+ */
+void AddArrayElement(int number, int arr[100], int &arrLength)
+{
+    arrLength++; // Increase the logic counter
+    arr[arrLength - 1] = number; // Place number in the new slot
+}
+
+/**
+ * Function: CopyDestinationNumberToArray (Distinct Copy)
+ * Purpose: Loops through Source array and copies only unique values to Destination.
+ */
+void CopyDestinationNumberToArray(int arrSource[100], int arrDestination[100], int SourceLength, int &DestinationLength)
+{
+    for (int i = 0; i < SourceLength; i++)
+    {
+        // IF the number from Source is NOT already in Destination array
+        if (!IsNumberInArray(arrSource[i], arrDestination, DestinationLength))
+        {
+            AddArrayElement(arrSource[i], arrDestination, DestinationLength);
+        }
+    }
+}
+
+int main()
+{
+    // Initialize source and destination arrays and their lengths
+    int arrSource[100], SourceLength = 0;
+    int arrDestination[100], DestinationLength = 0;
+
+    // 1. Fill the source array with predefined data
+    FillArray(arrSource, SourceLength);
+
+    // 2. Perform the copy logic to extract unique numbers
+    CopyDestinationNumberToArray(arrSource, arrDestination, SourceLength, DestinationLength);
+
+    // 3. Display results
+    cout << "--- Original Array (With Duplicates) ---" << endl;
+    PrintArray(arrSource, SourceLength);
+
+    cout << "\n--- Destination Array (Distinct Numbers Only) ---" << endl;
+    PrintArray(arrDestination, DestinationLength);
+
+    return 0;
+}
