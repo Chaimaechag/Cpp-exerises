@@ -1,0 +1,42 @@
+#include <iostream>  // For input and output operations
+#include <cmath>     // For math functions like pow() and sqrt()
+
+using namespace std;
+
+/**
+ * Function: ReadNumber
+ * Purpose: Prompts the user to enter a number and returns it.
+ */
+float ReadNumber()
+{
+    float number;
+    cout << "Please enter a number: ";
+    cin >> number;
+    return number;
+}
+
+/**
+ * Function: Mysqrt
+ * Purpose: Calculates the square root manually using the power function.
+ * Logic: Raising a number to the power of 0.5 is equivalent to taking its square root.
+ */
+float Mysqrt(float number) {
+    // Mathematical Rule: sqrt(x) = x^0.5
+    return pow(number, 0.5);
+}
+
+int main() {
+    // 1. Getting input from the user
+    float number = ReadNumber();
+
+    // 2. Comparing the custom function with the built-in C++ function
+    cout << "\n--- Square Root Comparison ---" << endl;
+    
+    // Using your custom function
+    cout << "My custom Sqrt: " << Mysqrt(number) << endl;
+    
+    // Using the built-in C++ sqrt function
+    cout << "C++ standard Sqrt: " << sqrt(number) << endl;
+
+    return 0;
+}
