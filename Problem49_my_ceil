@@ -1,0 +1,57 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+/**
+ * Function: ReadNumber
+ * Purpose: Reads a floating-point number from the user.
+ */
+float ReadNumber() {
+    float number;
+    cout << "Please enter a number: ";
+    cin >> number;
+    return number;
+}
+
+/**
+ * Function: GetFractionPart
+ * Purpose: Extracts the decimal part of the number.
+ */
+float GetFractionPart(float number) {
+    return number - (int)number;
+}
+
+/**
+ * Function: MyCeil
+ * Purpose: Manually implements the Ceil function.
+ * Logic: Returns the smallest integer greater than or equal to the number.
+ */
+int MyCeil(float number) {
+    // Check if there is a fractional part
+    if (abs(GetFractionPart(number)) > 0) {
+        if (number > 0) {
+            // For positive numbers with a fraction, move to the next whole number
+            return (int)number + 1;
+        } else {
+            // For negative numbers, dropping the fraction already moves it "up"
+            // Example: -2.1 becomes -2 (which is greater than -2.1)
+            return (int)number;
+        }
+    } else {
+        // If it's already a whole number, return it as is
+        return (int)number;
+    }
+}
+
+int main() {
+    // 1. Get user input
+    float number = ReadNumber();
+
+    // 2. Output and compare the results
+    cout << "\n--- Ceil Function Comparison ---" << endl;
+    cout << "My custom Ceil: " << MyCeil(number) << endl;
+    cout << "C++ standard ceil: " << ceil(number) << endl;
+
+    return 0;
+}
