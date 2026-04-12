@@ -1,0 +1,52 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+/**
+ * Function: ReadNumber
+ * Purpose: Reads a floating-point number from the user.
+ */
+float ReadNumber() {
+    float number;
+    cout << "Please enter a number: ";
+    cin >> number;
+    return number;
+}
+
+/**
+ * Function: GetFractionPart
+ * Purpose: Returns only the decimal part of a number.
+ */
+float GetFractionPart(float number) {
+    return number - (int)number;
+}
+
+/**
+ * Function: MyRound
+ * Purpose: Manually implements rounding logic (Professional Professor Method).
+ */
+int MyRound(float number) {
+    int intPart = (int)number;
+    float fractionPart = GetFractionPart(number);
+
+    // Check if the fraction is 0.5 or greater (using absolute value)
+    if (abs(fractionPart) >= 0.5) {
+        if (number > 0)
+            return ++intPart; // Round up for positive
+        else
+            return --intPart; // Round down for negative
+    } else {
+        return intPart; // Keep the integer part if fraction is small
+    }
+}
+
+int main() {
+    float number = ReadNumber();
+
+    cout << "\n--- Rounding Comparison ---" << endl;
+    cout << "My custom Round: " << MyRound(number) << endl;
+    cout << "C++ standard Round: " << round(number) << endl;
+
+    return 0;
+}
