@@ -1,0 +1,47 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+/**
+ * Function: ReadNumber
+ * Purpose: Reads a floating-point number from the user.
+ */
+float ReadNumber() {
+    float number;
+    cout << "Please enter a number: ";
+    cin >> number;
+    return number;
+}
+
+/**
+ * Function: MyFloor
+ * Purpose: Manually implements the floor function.
+ * Logic: Returns the greatest integer less than or equal to the number.
+ */
+int MyFloor(float number) {
+    // If the number is positive, simply truncate (remove decimals)
+    if (number >= 0) {
+        return (int)number;
+    } 
+    else {
+        // For negative numbers, if there is a decimal part, we go down by 1.
+        // If it's a whole number like -5.0, we stay at -5.
+        if (number == (int)number)
+            return (int)number;
+        else
+            return (int)number - 1;
+    }
+}
+
+int main() {
+    // 1. Get user input
+    float number = ReadNumber();
+
+    // 2. Output comparison
+    cout << "\n--- Floor Function Results ---" << endl;
+    cout << "My custom Floor: " << MyFloor(number) << endl;
+    cout << "C++ standard floor: " << floor(number) << endl;
+
+    return 0;
+}
